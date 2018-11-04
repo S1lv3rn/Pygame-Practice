@@ -25,15 +25,15 @@ crashed = False
 while not crashed:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-        	crashed = True
+            crashed = True
 
-		print(event)
+        print(event)
 
     gameDisplay.fill(WHITE)
     car(x,y)
-	pygame.display.update()
+    pygame.display.update()
 
-	clock.tick(50)
+    clock.tick(50)
 
 pygame.quit()
 quit()
