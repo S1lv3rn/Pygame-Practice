@@ -1,4 +1,5 @@
 import pygame
+import time
 
 pygame.init()
 display_width = 800
@@ -18,7 +19,24 @@ car_width = 85
 def car(x,y):
     gameDisplay.blit(carImg, (x,y))
 
-def gameLoop:
+def crash():
+    messageDisplay('You Crashed')
+
+
+def messageDisplay(text):
+    largeTxt = pygame.font.Font('freesansbold.ttf', 90)
+    TextSurf, TextRect = textObjects(text, largeTxt)
+    TextRect.center = ((display_width/2),(display_height/2))
+    gameDisplay.blit(TextSurf, TextRect)
+    pygame.display.update()
+    time.sleep(1)
+    gameLoop()
+
+def textObjects(text, font):
+    textSurface = font.render(text, True, BLACK)
+    return textSurface, textSurface.get_rect()
+
+def gameLoop():
 
     x = (display_width * 0.45)
     y = (display_height * 0.8)
@@ -28,7 +46,8 @@ def gameLoop:
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameExit = True
+                pygame.quit()
+                quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -47,14 +66,11 @@ def gameLoop:
         gameDisplay.fill(WHITE)
         car(x,y)
 
-        if x > display_width - car_width or x < 0:
-            gameExit = True
-            except Exception as e:
-                raise
+        if x > (display_width - car_width) or x < 0:
+            crash()
 
         pygame.display.update()
-
-        clock.tick(50)
+        clock.tick(60)
 
 gameLoop()
 pygame.quit()
