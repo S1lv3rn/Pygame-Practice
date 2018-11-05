@@ -1,5 +1,6 @@
 import pygame
 import time
+import random
 
 pygame.init()
 display_width = 800
@@ -15,6 +16,9 @@ pygame.display.set_caption('A bit Racey')
 clock = pygame.time.Clock()
 carImg = pygame.image.load('arts/car.png')
 car_width = 85
+
+def things(thingx,thingy,thingw,thingh,color):
+    pygame.draw.rect(gameDisplay,color,[thingx,thingy,thingw,thingh])
 
 def car(x,y):
     gameDisplay.blit(carImg, (x,y))
@@ -41,6 +45,11 @@ def gameLoop():
     x = (display_width * 0.45)
     y = (display_height * 0.8)
     x_change = 0
+    thingStartx = random.randrange(0, display_width)
+    thingStarty = -600
+    thingChange = 7
+    thingWidth = 100
+    thingHeight = 100
     gameExit = False
 
     while not gameExit:
@@ -64,10 +73,15 @@ def gameLoop():
         x += x_change
 
         gameDisplay.fill(WHITE)
+        things(thingStartx,thingStarty,thingWidth,thingHeight,BLACK)
+        thingStarty += thingChange
         car(x,y)
 
         if x > (display_width - car_width) or x < 0:
             crash()
+        if thingStarty > display_height:
+            thingStartx = random.randrange(0, display_width)
+            thingStarty = 0 - thingHeight
 
         pygame.display.update()
         clock.tick(60)
